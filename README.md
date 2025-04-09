@@ -21,8 +21,8 @@ Mise en place d’un conteneur Docker pour standardiser l’environnement de dé
 - Création d’un Dockerfile : définition de l’image Node.js, copie des fichiers du projet, installation des dépendances via npm install.
 - Exposition des ports : configuration du port 8000 pour permettre l’accès au serveur.
 - Commandes de build et de run :
-    - docker build -t browserquest .
-    - docker run -p 8000:8000 browserquest
+    - `docker build -t browserquest .`
+    - `docker run -p 8000:8000 browserquest`
 
 ### Étape 3 – Mise en place d’un Load Balancer
 
