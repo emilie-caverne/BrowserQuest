@@ -38,8 +38,7 @@ module.exports = Player = Character.extend({
                 self.connection.close("Invalid handshake message: "+message);
                 return;
             }
-            if(self.hasEnteredGame && !self.isDead && action === Types.Messages.HELLO) { // HELLO can be sent only once
-                self.connection.close("Cannot initiate handshake twice: "+message);
+            if(self.hasEnteredGame && !self.isDead && action == Types.Messages.HELLO) { // HELLO can be sent only once
                 return;
             }
             

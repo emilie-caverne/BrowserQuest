@@ -211,8 +211,6 @@ WS.socketIOConnection = Connection.extend({
         this._connection.disconnect();
     }
     
-
-
 });
 
 

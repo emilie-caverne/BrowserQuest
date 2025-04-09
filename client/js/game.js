@@ -2322,7 +2322,6 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             this.initPlayer();
         
             this.started = true;
-            this.client.enable();
             this.client.onConnected(() => {
                 this.sendHello(this.player);
             });
