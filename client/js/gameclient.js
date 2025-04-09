@@ -538,7 +538,24 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
         receivePong: function(data) {
             const latency = Date.now() - this.pingSentAt;
             console.log("PONG reçu - Latence estimée: " + latency + " ms");
-        },
+      
+            if (!this.pings) {
+              this.pings = [];
+            }
+      
+            this.pings.push(latency);
+            if (this.pings.length > 50) this.pings.shift();
+      
+            const average = Math.round(
+              this.pings.reduce((a, b) => a + b, 0) / this.pings.length
+            );
+            const max = Math.max(...this.pings);
+            const min = Math.min(...this.pings);
+      
+            console.log(
+              `📡 Latence: Moyenne ${average} ms, Min ${min} ms, Max ${max} ms`
+            );
+          },
         sendPing: function() {
             this.pingSentAt = Date.now();
             this.sendMessage([Types.Messages.PING]);

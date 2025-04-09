@@ -718,6 +718,23 @@ function(Camera, Item, Character, Player, Timer) {
         },
 
         renderFrame: function() {
+            if (!this._lastRenderTime) {
+                this._lastRenderTime = performance.now();
+                this._frameCount = 0;
+                this._fpsLogInterval = 1000; // en ms
+            }
+            
+            this._frameCount++;
+            const now = performance.now();
+            const elapsed = now - this._lastRenderTime;
+            
+            if (elapsed >= this._fpsLogInterval) {
+                const fps = (this._frameCount / elapsed) * 1000;
+                console.log(`🎮 FPS estimé : ${fps.toFixed(1)}`);
+                this._lastRenderTime = now;
+                this._frameCount = 0;
+            }
+            
             if(this.mobile || this.tablet) {
                 this.renderFrameMobile();
             }
