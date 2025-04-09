@@ -1,5 +1,5 @@
 {
-    "host": "Yout host here or localhost",
+    "host": "localhost",
     "port": 8000
   }
   
