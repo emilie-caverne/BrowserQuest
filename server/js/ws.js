@@ -169,9 +169,15 @@ WS.socketIOConnection = Connection.extend({
         });
 
         connection.on("message", function (message) {
-            log.info("Received: " + message)
+            log.info("Received: " + JSON.stringify(message));
+        
+            if (message[0] === Types.Messages.PING) {
+                self.send([Types.Messages.PONG]);
+                return;
+            }
+        
             if (self.listen_callback)
-                self.listen_callback(message)
+                self.listen_callback(message);
         });
 
         connection.on("disconnect", function () {

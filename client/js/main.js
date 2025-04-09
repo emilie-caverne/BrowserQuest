@@ -173,6 +173,7 @@ define(['jquery', 'app'], function($, App) {
         	    input = document.getElementById("chatinput");
 
     		game = new Game(app);
+            game.setServerOptions("127.0.0.1", 8000, "Emy");
     		game.setup('#bubbles', canvas, background, foreground, input);
     		game.setStorage(app.storage);
     		app.setGame(game);
