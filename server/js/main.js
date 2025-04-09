@@ -24,16 +24,19 @@ function main(config) {
             }
         }, 1000);
     
-    switch(config.debug_level) {
-        case "error":
-            log = new Log(Log.ERROR); break;
-        case "debug":
-            log = new Log(Log.DEBUG); break;
-        case "info":
-            log = new Log(Log.INFO); break;
-    };
-    
-    log.info("Starting BrowserQuest game server...");
+    switch (config.debug_level) {
+      case "error":
+        log = new Log(Log.ERROR);
+        break;
+      case "debug":
+        log = new Log(Log.DEBUG);
+        break;
+      case "info":
+        log = new Log(console.log);
+        break;
+    }
+
+    console.log("Starting BrowserQuest game server...");
     
     server.onConnect(function(connection) {
         var world, // the one in which the player will be spawned

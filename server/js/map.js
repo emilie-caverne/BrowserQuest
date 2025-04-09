@@ -79,19 +79,19 @@ module.exports = Map = cls.Class.extend({
         this.grid = [];
     
         if(this.isLoaded) {
-            var tileIndex = 0;
-            for(var	j, i = 0; i < this.height; i++) {
-                this.grid[i] = [];
-                for(j = 0; j < this.width; j++) {
-                    if(_.include(this.collisions, tileIndex)) {
-                        this.grid[i][j] = 1;
-                    } else {
-                        this.grid[i][j] = 0;
-                    }
-                    tileIndex += 1;
-                }
+          var tileIndex = 0;
+          for (var j, i = 0; i < this.height; i++) {
+            this.grid[i] = [];
+            for (j = 0; j < this.width; j++) {
+              if (_.include(this.collisions, tileIndex)) {
+                this.grid[i][j] = 1;
+              } else {
+                this.grid[i][j] = 0;
+              }
+              tileIndex += 1;
             }
-            //log.info("Collision grid generated.");
+          }
+          //console.log("Collision grid generated.");
         }
     },
 
