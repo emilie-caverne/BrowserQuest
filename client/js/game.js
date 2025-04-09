@@ -743,7 +743,6 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 
                 self.player.name = self.username;
                 self.started = true;
-            
                 self.sendHello(self.player);
             });
         
@@ -2242,7 +2241,9 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         
             this.started = true;
             this.client.enable();
-            this.sendHello(this.player);
+            this.client.onConnected(() => {
+                this.sendHello(this.player);
+            });
         
             this.storage.incrementRevives();
             
