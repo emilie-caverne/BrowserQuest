@@ -14,31 +14,34 @@ define(['area'], function(Area) {
             this.musicNames = ["village", "beach", "forest", "cave", "desert", "lavaland", "boss"];
             this.soundNames = ["loot", "hit1", "hit2", "hurt", "heal", "chat", "revive", "death", "firefox", "achievement", "kill1", "kill2", "noloot", "teleport", "chest", "npc", "npc-end"];
             
-            var loadSoundFiles = function() {
-                var counter = _.size(self.soundNames);
-                log.info("Loading sound files...");
-                _.each(self.soundNames, function(name) { self.loadSound(name, function() {
-                        counter -= 1;
-                        if(counter === 0) {
-                            if(!Detect.isSafari()) { // Disable music on Safari - See bug 738008
-                                loadMusicFiles();
-                            }
-                        }
-                    });
+            var loadSoundFiles = function () {
+              var counter = _.size(self.soundNames);
+              console.log("Loading sound files...");
+              _.each(self.soundNames, function (name) {
+                self.loadSound(name, function () {
+                  counter -= 1;
+                  if (counter === 0) {
+                    if (!Detect.isSafari()) {
+                      // Disable music on Safari - See bug 738008
+                      loadMusicFiles();
+                    }
+                  }
                 });
+              });
             };
-            
-            var loadMusicFiles = function() {
-                if(!self.game.renderer.mobile) { // disable music on mobile devices
-                    log.info("Loading music files...");
-                    // Load the village music first, as players always start here
-                    self.loadMusic(self.musicNames.shift(), function() {
-                        // Then, load all the other music files
-                        _.each(self.musicNames, function(name) {
-                            self.loadMusic(name);
-                        });
-                    });
-                }
+
+            var loadMusicFiles = function () {
+              if (!self.game.renderer.mobile) {
+                // disable music on mobile devices
+                console.log("Loading music files...");
+                // Load the village music first, as players always start here
+                self.loadMusic(self.musicNames.shift(), function () {
+                  // Then, load all the other music files
+                  _.each(self.musicNames, function (name) {
+                    self.loadMusic(name);
+                  });
+                });
+              }
             };
         
             if(!(Detect.isSafari() && Detect.isWindows())) {

@@ -52,7 +52,7 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
              
             this.connection = io(url, {'force new connection':true});
             this.connection.on('connection', function(socket){
-                log.info("Connected to server " + url);
+                console.log("Connected to server " + url);
             });
 
             /******
