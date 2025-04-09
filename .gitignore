@@ -1,6 +1,5 @@
 node_modules
 client-build
 build.txt
-client/audio/music
 .DS_Store
 *.swp

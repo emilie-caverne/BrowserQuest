@@ -88,7 +88,12 @@ var Connection = cls.Class.extend({
     },
     
     close: function(logError) {
-        log.info("Closing connection to "+this._connection.remoteAddress+". Error: "+logError);
+        console.log(
+          "Closing connection to " +
+            this._connection.remoteAddress +
+            ". Error: " +
+            logError
+        );
         this._connection.close();
     }
 });
@@ -111,7 +116,7 @@ WS.socketIOServer = Server.extend({
 
 
         self.io.on('connection', function(connection){
-          log.info('a user connected');
+          console.log("a user connected");
 
           connection.remoteAddress = connection.handshake.address.address
 
@@ -134,7 +139,7 @@ WS.socketIOServer = Server.extend({
          })
 
         http.listen(port, function(){
-          log.info('listening on *:' + port);
+          console.log("listening on *:" + port);
         });
     },
 
@@ -169,7 +174,7 @@ WS.socketIOConnection = Connection.extend({
         });
 
         connection.on("message", function (message) {
-            log.info("Received: " + JSON.stringify(message));
+            console.log("Received: " + JSON.stringify(message));
         
             if (message[0] === Types.Messages.PING) {
                 self.send([Types.Messages.PONG]);
@@ -202,7 +207,7 @@ WS.socketIOConnection = Connection.extend({
     },
 
     close: function(logError) {
-        log.info("Closing connection to socket"+". Error: " + logError);
+        console.log("Closing connection to socket" + ". Error: " + logError);
         this._connection.disconnect();
     }
     
@@ -257,7 +262,7 @@ WS.MultiVersionWebsocketServer = Server.extend({
             response.end();
         });
         this._httpServer.listen(port, function() {
-            log.info("Server is listening on port "+port);
+            console.log("Server is listening on port "+port);
         });
         
         this._miksagoServer = wsserver.createServer();
