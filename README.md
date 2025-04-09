@@ -13,12 +13,10 @@
 ---
 # Pour lancer le projet 
 
-## Avec le deploiemnt du back :
-Lancer le index.html avec live server ( extension vs code ) 
+## En local
 
-Le backend est deployé sur aws ici http://13.49.228.238:8000/
-
-## Avec docker 
+Basculez sur la branche 'localhost'
+### Avec docker 
 A la racine du projet : 
 
 `docker build -t browserquest .`
@@ -26,7 +24,19 @@ A la racine du projet :
 Puis 
 
 `docker run -p 8000:8000 -p 8080:8080 browserquest`
+
+## Sur le déploiement
+
+Basculez sur la branche 'Deploy'
+
+Lancer le index.html , You might want to host a webserver and open index.html in that (e.g. 127.0.0.1/index.html). (live server)
+
+pas besions de lancer le backend , il est deployé sur aws ici http://13.49.228.238:8000/
+
+
 ## Étapes réalisées
+
+
 
 ### Étape 1 – Déploiement Docker
 
