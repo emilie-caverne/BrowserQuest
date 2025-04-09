@@ -11,19 +11,31 @@
 - Émilie Caverne
 
 ---
+# Pour lancer le projet 
 
+## Avec le deploiemnt du back :
+Lancer le index.html avec live server ( extension vs code ) 
+
+Le backend est deployé sur aws ici http://13.49.228.238:8000/
+
+## Avec docker 
+A la racine du projet : 
+
+`docker build -t browserquest .`
+
+Puis 
+
+`docker run -p 8000:8000 -p 8080:8080 browserquest`
 ## Étapes réalisées
 
 ### Étape 1 – Déploiement Docker
 
 Mise en place d’un conteneur Docker pour standardiser l’environnement de développement et faciliter le déploiement.
 
-- Création d’un Dockerfile : définition de l’image Node.js, copie des fichiers du projet, installation des dépendances via npm install.
-- Exposition des ports : configuration du port 8000 pour permettre l’accès au serveur.
+- Dockerfile : définition de l’image Node.js, copie des fichiers du projet, installation des dépendances via npm install.Lancement du front avec http-server.
 - Commandes de build et de run :
     - `docker build -t browserquest .`
     - `docker run -p 8000:8000 -p 8080:8080 browserquest`
-
 ---
 
 ### Étape 3 – Mise en place d’un Load Balancer
