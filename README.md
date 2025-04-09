@@ -22,7 +22,9 @@ Mise en place d’un conteneur Docker pour standardiser l’environnement de dé
 - Exposition des ports : configuration du port 8000 pour permettre l’accès au serveur.
 - Commandes de build et de run :
     - `docker build -t browserquest .`
-    - `docker run -p 8000:8000 browserquest`
+    - `docker run -p 8000:8000 -p 8080:8080 browserquest`
+
+---
 
 ### Étape 3 – Mise en place d’un Load Balancer
 
