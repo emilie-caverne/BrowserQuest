@@ -66,4 +66,17 @@ Optimisations effectuées côté client et serveur :
 2. **Rendu graphique** : optimisation du `canvas`, avec désactivation de l'anti-aliasing sur certains navigateurs.
 3. **Gestion des ressources** : vérification de la consommation CPU/mémoire du client ; réflexion autour du nettoyage des objets inutilisés.
 
+
+ ### Étape 6 – Sécurisation de l'Application
+
+Mise en place de plusieurs mécanismes pour protéger l'application :
+
+- Pare-feu EC2
+    - Ouverture uniquement des ports nécessaires : `22` (SSH), `80` (HTTP) et `443` (HTTPS).
+    - Restriction de l'accès SSH à une IP spécifique.
+    - Configuration réalisée via la console AWS dans les paramètres du groupe de sécurité associé à l'instance EC2.
+
+- Fail2Ban : surveillance des connexions SSH et bannissement automatique des adresses IP après plusieurs échecs de connexion. Configuration dans /etc/fail2ban/jail.local.
+--- 
+
 ---
