@@ -73,10 +73,11 @@ Mise en place de plusieurs mécanismes pour protéger l'application :
 
 - Pare-feu EC2
     - Ouverture uniquement des ports nécessaires : `22` (SSH), `80` (HTTP) et `443` (HTTPS).
-    - Restriction de l'accès SSH à une IP spécifique.
-    - Configuration réalisée via la console AWS dans les paramètres du groupe de sécurité associé à l'instance EC2.
-
+    - Configuration réalisée via la console AWS dans les paramètres du groupe de sécurité associé à l'instance EC2. 
 - Fail2Ban : surveillance des connexions SSH et bannissement automatique des adresses IP après plusieurs échecs de connexion. Configuration dans /etc/fail2ban/jail.local.
---- 
+
+- Pare-feu système (UFW)
+- Activation du pare-feu local sur l'instance Ubuntu avec UFW.
+- Autorisation uniquement des ports nécessaires
 
 ---
