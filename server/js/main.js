@@ -43,7 +43,7 @@ function main(config) {
     console.log("Starting BrowserQuest game server...");
     
     server.onConnect(function(connection) {
-        let world; // le monde dans lequel le joueur va être spawn
+        let world; 
         const connect = function() {
             if(world) {
                 world.connect_callback(new Player(connection, world, log));
@@ -52,13 +52,11 @@ function main(config) {
         
         if(metrics) {
             metrics.getOpenWorldCount(function(open_world_count) {
-                // choisir le monde le moins peuplé parmi les mondes ouverts
                 world = _.min(_.first(worlds, open_world_count), function(w) { return w.playerCount; });
                 connect();
             });
         }
         else {
-            // remplir chacun des mondes séquentiellement jusqu'à saturation
             world = _.detect(worlds, function(world) {
                 return world.playerCount < config.nb_players_per_world;
             });

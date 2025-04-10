@@ -25,7 +25,6 @@ module.exports = Player = Character.extend({
         this.lastCheckpoint = null;
         this.formatChecker = new FormatChecker();
         this.disconnectTimeout = null;
- // ou Log.INFO si tu veux moins de verbosité
 
         
         this.connection.listen(function(message) {
