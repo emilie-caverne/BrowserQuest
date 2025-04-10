@@ -107,39 +107,31 @@ var Connection = cls.Class.extend({
 
 WS.socketIOServer = Server.extend({
     init: function(host, port) {
-        self = this;
-        self.host = host;
-        self.port = port;
-        var app = require('express')();
-        var http = require('http').Server(app);
-        self.io = require('socket.io')(http);
-
-
-        self.io.on('connection', function(connection){
-          console.log("a user connected");
-
-          connection.remoteAddress = connection.handshake.address.address
-
-  
-          var c = new WS.socketIOConnection(self._createId(), connection, self);
-            
-          if(self.connection_callback) {
-                self.connection_callback(c);
-          }
-          self.addConnection(c);
-
+        this.host = host;
+        this.port = port;
+    
+        const app = require('express')();
+        const http = require('http').Server(app);
+        this.io = require('socket.io')(http);
+    
+        this.io.on('connection', (connection) => {
+            console.log("a user connected");
+            connection.remoteAddress = connection.handshake.address;
+    
+            const c = new WS.socketIOConnection(this._createId(), connection, this);
+            if (this.connection_callback) {
+                this.connection_callback(c);
+            }
+            this.addConnection(c);
         });
-
-        
-
-        self.io.on('error', function (err) { 
-            log.error(err.stack); 
-            self.error_callback()
-
-         })
-
-        http.listen(port, function(){
-          console.log("listening on *:" + port);
+    
+        this.io.on('error', (err) => {
+            console.error(err.stack);
+            if (this.error_callback) this.error_callback();
+        });
+    
+        http.listen(port, () => {
+            console.log("listening on *:" + port);
         });
     },
 
@@ -189,7 +181,7 @@ WS.socketIOConnection = Connection.extend({
             if(self.close_callback) {
                 self.close_callback();
             }
-            delete self._server.removeConnection(self.id);
+            self._server.removeConnection(self.id);
         });
 
     },
