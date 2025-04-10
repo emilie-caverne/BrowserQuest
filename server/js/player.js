@@ -7,6 +7,8 @@ var cls = require("./lib/class"),
     Formulas = require("./formulas"),
     check = require("./format").check,
     Types = require("../../shared/js/gametypes");
+    const Log = require('log');
+    const log = new Log(Log.DEBUG);
 
 module.exports = Player = Character.extend({
     init: function(connection, worldServer) {
@@ -23,6 +25,8 @@ module.exports = Player = Character.extend({
         this.lastCheckpoint = null;
         this.formatChecker = new FormatChecker();
         this.disconnectTimeout = null;
+ // ou Log.INFO si tu veux moins de verbosité
+
         
         this.connection.listen(function(message) {
 

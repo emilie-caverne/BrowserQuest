@@ -1,60 +1,64 @@
-var fs = require('fs'),
-    Metrics = require('./metrics');
- 
+const fs = require('fs');
+const Metrics = require('./metrics');
+const ws = require("./ws");
+const WorldServer = require("./worldserver");
+const Log = require('log');
+const _ = require('underscore');
+const Player = require('./player'); 
 
 function main(config) {
-    var ws = require("./ws"),
-        WorldServer = require("./worldserver"),
-        Log = require('log'),
-        _ = require('underscore'),
-        server = new ws.socketIOServer(config.host, config.port),
-        metrics = config.metrics_enabled ? new Metrics(config) : null;
-        worlds = [],
-        lastTotalPlayers = 0,
-        checkPopulationInterval = setInterval(function() {
-            if(metrics && metrics.isReady) {
-                metrics.getTotalPlayers(function(totalPlayers) {
-                    if(totalPlayers !== lastTotalPlayers) {
-                        lastTotalPlayers = totalPlayers;
-                        _.each(worlds, function(world) {
-                            world.updatePopulation(totalPlayers);
-                        });
-                    }
-                });
-            }
-        }, 1000);
+    const server = new ws.socketIOServer(config.host, config.port);
+    const metrics = config.metrics_enabled ? new Metrics(config) : null;
+    const worlds = [];
+    let lastTotalPlayers = 0;
     
+    const checkPopulationInterval = setInterval(function() {
+        if(metrics && metrics.isReady) {
+            metrics.getTotalPlayers(function(totalPlayers) {
+                if(totalPlayers !== lastTotalPlayers) {
+                    lastTotalPlayers = totalPlayers;
+                    _.each(worlds, function(world) {
+                        world.updatePopulation(totalPlayers);
+                    });
+                }
+            });
+        }
+    }, 1000);
+    
+    let log;
     switch (config.debug_level) {
-      case "error":
-        log = new Log(Log.ERROR);
-        break;
-      case "debug":
-        log = new Log(Log.DEBUG);
-        break;
-      case "info":
-        log = new Log(console.log);
-        break;
+        case "error":
+            log = new Log(Log.ERROR);
+            break;
+        case "debug":
+            log = new Log(Log.DEBUG);
+            break;
+        case "info":
+            log = new Log(Log.INFO); 
+            break;
+        default:
+            log = new Log(Log.INFO);
     }
-
+    
     console.log("Starting BrowserQuest game server...");
     
     server.onConnect(function(connection) {
-        var world, // the one in which the player will be spawned
-            connect = function() {
-                if(world) {
-                    world.connect_callback(new Player(connection, world));
-                }
-            };
+        let world; // le monde dans lequel le joueur va être spawn
+        const connect = function() {
+            if(world) {
+                world.connect_callback(new Player(connection, world, log));
+            }
+        };
         
         if(metrics) {
             metrics.getOpenWorldCount(function(open_world_count) {
-                // choose the least populated world among open worlds
+                // choisir le monde le moins peuplé parmi les mondes ouverts
                 world = _.min(_.first(worlds, open_world_count), function(w) { return w.playerCount; });
                 connect();
             });
         }
         else {
-            // simply fill each world sequentially until they are full
+            // remplir chacun des mondes séquentiellement jusqu'à saturation
             world = _.detect(worlds, function(world) {
                 return world.playerCount < config.nb_players_per_world;
             });
@@ -62,12 +66,12 @@ function main(config) {
             connect();
         }
     });
-
+    
     server.onError(function() {
         log.error(Array.prototype.join.call(arguments, ", "));
     });
     
-    var onPopulationChange = function() {
+    const onPopulationChange = function() {
         metrics.updatePlayerCounters(worlds, function(totalPlayers) {
             _.each(worlds, function(world) {
                 world.updatePopulation(totalPlayers);
@@ -75,9 +79,9 @@ function main(config) {
         });
         metrics.updateWorldDistribution(getWorldDistribution(worlds));
     };
-
+    
     _.each(_.range(config.nb_worlds), function(i) {
-        var world = new WorldServer('world'+ (i+1), config.nb_players_per_world, server);
+        const world = new WorldServer('world' + (i + 1), config.nb_players_per_world, server);
         world.run(config.map_filepath);
         worlds.push(world);
         if(metrics) {
@@ -92,18 +96,16 @@ function main(config) {
     
     if(config.metrics_enabled) {
         metrics.ready(function() {
-            onPopulationChange(); // initialize all counters to 0 when the server starts
+            onPopulationChange();
         });
     }
-    
-    process.on('uncaughtException', function (e) {
-        log.error('uncaughtException: ' + e);
+    process.on('uncaughtException', function(e) {
+        log.error('uncaughtException:', e.stack || e);
     });
 }
 
 function getWorldDistribution(worlds) {
-    var distribution = [];
-    
+    const distribution = [];
     _.each(worlds, function(world) {
         distribution.push(world.playerCount);
     });
@@ -121,11 +123,10 @@ function getConfigFile(path, callback) {
     });
 }
 
-var defaultConfigPath = './server/config.json';
-var customConfigPath = './server/config.json';
+const defaultConfigPath = './server/config.json';
+const customConfigPath = './server/config.json';
 
-
-process.argv.forEach(function (val, index, array) {
+process.argv.forEach(function (val, index) {
     if(index === 2) {
         customConfigPath = val;
     }
@@ -133,8 +134,7 @@ process.argv.forEach(function (val, index, array) {
 
 getConfigFile(defaultConfigPath, function(defaultConfig) {
     console.log('defaultConfigPath:', defaultConfigPath);
-console.log('customConfigPath:', customConfigPath);
-
+    console.log('customConfigPath:', customConfigPath);
     getConfigFile(customConfigPath, function(localConfig) {
         if(localConfig) {
             main(localConfig);
