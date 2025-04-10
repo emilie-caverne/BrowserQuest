@@ -13,7 +13,7 @@
 ---
 # Pour lancer le projet 
 
-## En local
+## En solo
 
 Basculez sur la branche 'localhost'
 ### Avec docker 
@@ -25,7 +25,7 @@ Puis
 
 `docker run -p 8000:8000 -p 8080:8080 browserquest`
 
-## Sur le déploiement
+## En multijoueurs
 
 Basculez sur la branche 'Deploy'
 
