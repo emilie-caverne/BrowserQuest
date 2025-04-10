@@ -730,7 +730,7 @@ function(Camera, Item, Character, Player, Timer) {
             
             if (elapsed >= this._fpsLogInterval) {
                 const fps = (this._frameCount / elapsed) * 1000;
-                console.log(`🎮 FPS estimé : ${fps.toFixed(1)}`);
+                //console.log(`FPS estimé : ${fps.toFixed(1)}`);
                 this._lastRenderTime = now;
                 this._frameCount = 0;
             }

@@ -747,12 +747,15 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             
             this.client.onConnected(function() {
                 console.log("Starting client/server handshake");
-                
-                self.player.name = self.username;
+            
+                // Recrée un nouveau joueur s'il a été supprimé
+                if (!self.player) {
+                    self.player = new Warrior("player", self.username);
+                }
+            
                 self.started = true;
-                self.sendHello(self.player);
             });
-        
+
             this.client.onEntityList(function(list) {
                 var entityIds = _.pluck(self.entities, 'id'),
                     knownIds = _.intersection(entityIds, list),
@@ -774,10 +777,11 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             this.client.onWelcome(function(id, name, x, y, hp) {
                 console.log("Received player ID from server : " + id);
                 self.player.id = id;
+                self.player.name = name;
+                self.sendHello(self.player);                
                 self.playerId = id;
                 // Always accept name received from the server which will
                 // sanitize and shorten names exceeding the allowed length.
-                self.player.name = name;
                 self.player.setGridPosition(x, y);
                 self.player.setMaxHitPoints(hp);
             

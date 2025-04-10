@@ -133,16 +133,19 @@ process.argv.forEach(function (val, index, array) {
 
 getConfigFile(defaultConfigPath, function(defaultConfig) {
     console.log('defaultConfigPath:', defaultConfigPath);
-console.log('customConfigPath:', customConfigPath);
+    console.log('customConfigPath:', customConfigPath);
 
     getConfigFile(customConfigPath, function(localConfig) {
-        if(localConfig) {
-            main(localConfig);
-        } else if(defaultConfig) {
-            main(defaultConfig);
+        const config = localConfig || defaultConfig;
+
+        if (config) {
+            config.port = process.env.PORT || config.port;
+
+            main(config);
         } else {
             console.error("Server cannot start without any configuration file.");
             process.exit(1);
         }
     });
 });
+
