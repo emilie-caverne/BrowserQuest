@@ -33,8 +33,7 @@ Lancer le index.html , You might want to host a webserver and open index.html in
 
 pas besoin de lancer le backend , il est deployé sur aws ici http://13.49.228.238:8000/ 
 
-[![Node.js CI](https://github.com/nenuadrian/BrowserQuest/actions/workflows/node.js.yml/badge.svg)](https://github.com/nenuadrian/BrowserQuest/actions/workflows/node.js.yml)
-![alt tag](https://raw.github.com/nenuadrian/BrowserQuest/master/screens/5.png)
+![alt tag](https://raw.github.com/nenuadrian/BrowserQuest/screens/5.png)
 
 
 ## Étapes réalisées
