@@ -33,7 +33,7 @@ Lancer le index.html , You might want to host a webserver and open index.html in
 
 pas besoin de lancer le backend , il est deployé sur aws ici http://13.49.228.238:8000/ 
 
-![alt tag](https://raw.github.com/nenuadrian/BrowserQuest/screens/5.png)
+![alt tag](https://github.com/emilie-caverne/BrowserQuest/blob/main/screens/5.png)
 
 
 ## Étapes réalisées
