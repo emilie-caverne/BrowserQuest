@@ -66,6 +66,7 @@ Optimisations effectuées côté client et serveur :
 2. **Rendu graphique** : optimisation du `canvas`, avec désactivation de l'anti-aliasing sur certains navigateurs.
 3. **Gestion des ressources** : vérification de la consommation CPU/mémoire du client ; réflexion autour du nettoyage des objets inutilisés.
 
+---
 
  ### Étape 6 – Sécurisation de l'Application
 
