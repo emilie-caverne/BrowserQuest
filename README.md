@@ -65,8 +65,7 @@ Utilisation de **NGINX** pour répartir la charge entre plusieurs instances du s
 Optimisations effectuées côté client et serveur :
 
 1. **Réduction de la latence WebSocket** : implémentation d’un système `ping/pong` pour mesurer et suivre la latence.
-2. **Rendu graphique** : optimisation du `canvas`, avec désactivation de l'anti-aliasing sur certains navigateurs.
-3. **Gestion des ressources** : vérification de la consommation CPU/mémoire du client ; réflexion autour du nettoyage des objets inutilisés.
+2. **Rendu graphique** : optimisation du `canvas`.
 
 ---
 
