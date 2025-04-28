@@ -11,6 +11,8 @@
 - Émilie Caverne
 
 ---
+
+#Disclaimer : Kelly a eu des pb push son travail , il a donc été push par EMy et moi 
 # Pour lancer le projet 
 
 ## En solo
